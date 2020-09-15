@@ -1,45 +1,50 @@
 package learning.java.school;
 
+import learning.java.school.model.Grupo;
+import learning.java.school.model.Professor;
+import learning.java.school.model.Student;
 
-import java.util.Scanner;
+import java.io.IOException;
 
 public class Application {
 
-    public static void main(String[] args) {
-        Student[] Student= new Student[]{
-                new Student("Edilberto", "45781"),
-                new Student("Alain", "41"),
-                new Student("Jocelyn", "481"),
-                new Student("Kaleb", "81")
-        };
+    public static void main(String[] args) throws IOException {
+        Grupo[] groups = prepareOOPGroups();
 
-        Scanner scanner = new Scanner(System.in);
-        int []aux=new int[Student.length];
-        for(int i = 0; i <Student.length; i++){
-            System.out.println(" ");
-            System.out.println("Name: " + Student[i].getName() + " code: " + Student[i].getCode());
-            System.out.print("Asistio: ");
-            String response = scanner.next();
-            if (response.equalsIgnoreCase("Y")) {
-                aux[i]=1;
-                System.out.println(Student[i].getName()+" SI");
-            } else if (response.equalsIgnoreCase("N")) {
-                aux[i]=0;
-                System.out.println(Student[i].getName()+ " NO");
-            } else {
-                System.out.println("Intente de nuevo");
-                i--;
-            }
+        for (Grupo grupo : groups) {
+            System.out.println("Profesor: " + grupo.getProfessor().getName());
+            System.out.println("Cupo: " + grupo.getAvailability() + ", Inscritos: " + grupo.getEnrolled());
+            System.out.println("Students: ");
+            grupo.printStudentsList();
+            System.out.println("---------------------------------------");
         }
-        System.out.println("-");
-            for (int j=0;j< Student.length;j++){
-                if(aux[j]==1){
-                    System.out.println(Student[j].getName() + ": si Asistio");
-                }
-                else{
-                    System.out.println(Student[j].getName() + ": No Asistio");
-                }
-        }
+
+        groups[1].addStudent(new Student("Caleb", "asd"));
+
+    }
+
+    public static Grupo[] prepareOOPGroups() {
+        Grupo[] groups = new Grupo[2];
+        Professor professorIvan = new Professor();
+        Professor professorPaco = new Professor();
+
+        professorIvan.setName("Ivan Uresti");
+        professorPaco.setName("Paco Torres");
+
+        groups[0] = new Grupo(20);
+        groups[1] = new Grupo(15,professorIvan);
+
+        groups[0].setProfessor(professorPaco);
+
+        groups[0].addStudent(new Student("Isaias", "100"));
+        groups[1].addStudent(new Student("Arturo", "201"));
+        groups[0].addStudent(new Student("Angel", "101"));
+        groups[1].addStudent(new Student("Jocelyn", "202"));
+        groups[0].addStudent(new Student("Jose", "102"));
+        groups[1].addStudent(new Student("Alain", "200"));
+        groups[1].addStudent(new Student("Antonio", "203"));
+
+        return groups;
 
     }
 }

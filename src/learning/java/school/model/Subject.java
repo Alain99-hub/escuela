@@ -1,4 +1,4 @@
-package learning.java.school;
+package learning.java.school.model;
 
 class Subject {
     private String name;
